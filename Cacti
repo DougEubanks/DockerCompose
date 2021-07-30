@@ -1,0 +1,5 @@
+FROM tendernessm/cacti:1.2.16 AS base
+
+WORKDIR /etc/
+
+RUN sed -i 's/*\/5/*/' /etc/crontab
