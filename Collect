@@ -1,0 +1,14 @@
+#Docker image for https://github.com/xarantolus/Collect
+
+FROM alpine:3.14 AS base
+
+RUN apk add --no-cache nano bash nano wget curl git tar gzip youtube-dl
+RUN git clone https://github.com/xarantolus/Collect.git /app/collect
+WORKDIR /app/collect
+RUN git fetch origin pull/27/head:local
+
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.12/main/ nodejs=12.22.4-r0 npm=12.22.4-r0
+RUN npm install --global yarn
+
+RUN yarn install --prod
+RUN yarn add --no-lockfile get-stream website-scraper website-scraper-phantom unfluff get-folder-size@2.0.1 async ytdl-core command-exists download path execa fs-extra normalize-path is-windows ytdl-run express cookie-parser compression archiver socket.io pug
